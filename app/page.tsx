@@ -6,6 +6,8 @@ import { CourseOutline } from "@/components/CourseOutline";
 import { LaunchCountdown } from "@/components/LaunchCountdown";
 import { RefundPolicy } from "@/components/RefundPolicy";
 import { PricingRoadmap } from "@/components/PricingRoadmap";
+import { Faq } from "@/components/Faq";
+import { MobileEnrollBar } from "@/components/MobileEnrollBar";
 import {
   CAREER_OUTCOMES,
   HIRING_COMPANIES,
@@ -689,6 +691,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      <Faq />
+
+      {/* FINAL CTA */}
+      <section className="final-cta">
+        <div className="final-cta-inner">
+          <div className="urgency-eyebrow">Founding Cohort · Starts Nov 14, 2026</div>
+          <h2>Ship production AI systems in 24 weeks.</h2>
+          <p>
+            15 seats. Live sessions every week, code reviews from a working US
+            AI/ML engineer, and a 7-day refund window after orientation.
+          </p>
+          <div className="final-cta-row">
+            <Link href="/subscribe?plan=COHORT" className="btn-primary">
+              Join Founding Cohort — $1,299
+            </Link>
+            <a href="#pricing" className="btn-ghost">
+              Compare plans
+            </a>
+          </div>
+        </div>
+      </section>
+
       <footer className="site-footer">
         <p>
           © {new Date().getFullYear()} Basazin Belhu · AI &amp; ML Engineer
@@ -700,6 +724,7 @@ export default function HomePage() {
           <a href="tel:+12064755393">(206) 475-5393</a>
         </p>
       </footer>
+      <MobileEnrollBar />
     </main>
   );
 }
