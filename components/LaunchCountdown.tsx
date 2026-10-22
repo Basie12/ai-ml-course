@@ -14,9 +14,7 @@ function calc(): Parts {
   return { days, hours, mins, secs };
 }
 
-function fmt(parts: Parts) {
-  return `${parts.days}d ${parts.hours}h ${parts.mins}m ${parts.secs}s`;
-}
+const pad = (n: number) => String(n).padStart(2, "0");
 
 export function LaunchCountdown({ inline = false }: { inline?: boolean }) {
   const [parts, setParts] = useState<Parts | null>(null);
@@ -27,33 +25,40 @@ export function LaunchCountdown({ inline = false }: { inline?: boolean }) {
     return () => window.clearInterval(id);
   }, []);
 
-  const display = parts ?? { days: 0, hours: 0, mins: 0, secs: 0 };
+  const launched =
+    parts !== null &&
+    parts.days + parts.hours + parts.mins + parts.secs === 0;
 
   if (inline) {
-    return <span>{parts ? fmt(display) : "Loading…"}</span>;
+    if (!parts) return <span className="countdown-inline">Loading…</span>;
+    if (launched) return <span className="countdown-inline">Live Now!</span>;
+    return (
+      <span className="countdown-inline">
+        {parts.days}d {pad(parts.hours)}h {pad(parts.mins)}m {pad(parts.secs)}s
+      </span>
+    );
   }
 
+  const units: [string, number | null][] = [
+    ["Days", parts?.days ?? null],
+    ["Hours", parts?.hours ?? null],
+    ["Minutes", parts?.mins ?? null],
+    ["Seconds", parts?.secs ?? null],
+  ];
+
   return (
-    <div className="countdown" aria-live="polite">
-      <div className="countdown-grid">
-        <div className="countdown-cell">
-          <strong>{String(display.days).padStart(2, "0")}</strong>
-          <span>Days</span>
-        </div>
-        <div className="countdown-cell">
-          <strong>{String(display.hours).padStart(2, "0")}</strong>
-          <span>Hours</span>
-        </div>
-        <div className="countdown-cell">
-          <strong>{String(display.mins).padStart(2, "0")}</strong>
-          <span>Minutes</span>
-        </div>
-        <div className="countdown-cell">
-          <strong>{String(display.secs).padStart(2, "0")}</strong>
-          <span>Seconds</span>
-        </div>
+    <>
+      <div className="countdown-block" aria-live="polite">
+        {units.map(([label, value]) => (
+          <div className="countdown-unit" key={label}>
+            <span className="countdown-num">
+              {value === null ? "--" : pad(value)}
+            </span>
+            <span className="countdown-label">{label}</span>
+          </div>
+        ))}
       </div>
-      <p className="countdown-caption">to launch · November 14, 2026</p>
-    </div>
+      <div className="countdown-caption">to launch · November 14, 2026</div>
+    </>
   );
 }
