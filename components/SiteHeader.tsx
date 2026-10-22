@@ -31,34 +31,61 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="site-header">
-      <Link href="/" className="brand">
-        BASSA<span>COURSE</span>
+    <nav className="site-header" aria-label="Primary">
+      <Link href="/" className="nav-logo">
+        Bassa<span>.</span>AI
       </Link>
-      <nav>
-        <a href={appPath("/#curriculum")}>Curriculum</a>
-        <a href={appPath("/#outcomes")}>Outcomes</a>
-        <a href={appPath("/#salary")}>Salary</a>
-        <a href={appPath("/#projects")}>Projects</a>
-        <a href={appPath("/#pricing")}>Pricing</a>
-        <a href={appPath("/#outline")}>Outline</a>
-        <a href={appPath("/#about")}>About</a>
+      <ul className="nav-links">
+        <li>
+          <a href={appPath("/#curriculum")}>Curriculum</a>
+        </li>
+        <li>
+          <a href={appPath("/#outcomes")}>Outcomes</a>
+        </li>
+        <li>
+          <a href={appPath("/#salary")}>Salary</a>
+        </li>
+        <li>
+          <a href={appPath("/#projects")}>Projects</a>
+        </li>
+        <li>
+          <a href={appPath("/#pricing")}>Pricing</a>
+        </li>
+        <li>
+          <a href={appPath("/#outline")}>Outline</a>
+        </li>
+        <li>
+          <a href={appPath("/#about")}>About</a>
+        </li>
         {user ? (
           <>
-            <Link href="/dashboard">My courses</Link>
-            <button type="button" className="linkish" onClick={onLogout}>
-              Sign out
-            </button>
+            <li>
+              <Link href="/dashboard">My courses</Link>
+            </li>
+            <li>
+              <button type="button" className="linkish" onClick={onLogout}>
+                Sign out
+              </button>
+            </li>
           </>
         ) : (
           <>
-            <Link href="/login">Sign in</Link>
-            <Link href="/subscribe?plan=COHORT" className="btn btn-sm">
-              Enroll Now
-            </Link>
+            <li>
+              <Link href="/login">Sign in</Link>
+            </li>
+            <li>
+              <Link href="/subscribe?plan=COHORT" className="nav-cta">
+                Enroll Now
+              </Link>
+            </li>
           </>
         )}
-      </nav>
-    </header>
+      </ul>
+      {!user && (
+        <Link href="/subscribe?plan=COHORT" className="nav-cta nav-cta-mobile">
+          Enroll
+        </Link>
+      )}
+    </nav>
   );
 }

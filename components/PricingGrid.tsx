@@ -9,23 +9,31 @@ export function PricingGrid() {
       {PLANS.map((plan) => (
         <article
           key={plan.id}
-          className={`price-card ${plan.highlighted ? "featured" : ""}`}
+          className={`price-card${plan.highlighted ? " featured" : ""}`}
         >
-          {plan.highlighted && <p className="badge">Founding Cohort · Live</p>}
-          <h3>{plan.name}</h3>
-          <p className="price">
-            <span>${plan.price.toLocaleString()}</span>
-            <s>Retail: ${plan.retail.toLocaleString()}+</s>
-          </p>
-          <p className="blurb">{plan.blurb}</p>
-          <ul>
+          {plan.highlighted && (
+            <div className="price-badge">Founding Cohort · Live</div>
+          )}
+          <div className="price-tier">{plan.name}</div>
+          <div className="price-amount">
+            <sup>$</sup>
+            {plan.price.toLocaleString()}
+          </div>
+          <div className="price-stripe">
+            Retail: ${plan.retail.toLocaleString()}+
+          </div>
+          <p className="price-tagline">{plan.blurb}</p>
+          <ul className="price-features">
             {plan.features.map((f) => (
-              <li key={f.label} className={f.included ? "yes" : "no"}>
-                {f.included ? "✓" : "–"} {f.label}
+              <li key={f.label} className={f.included ? undefined : "no"}>
+                {f.label}
               </li>
             ))}
           </ul>
-          <Link href={`/subscribe?plan=${plan.id}`} className="btn btn-block">
+          <Link
+            href={`/subscribe?plan=${plan.id}`}
+            className="price-cta"
+          >
             {plan.cta}
           </Link>
         </article>

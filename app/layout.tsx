@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Manrope, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 
-const space = Space_Grotesk({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-space",
-  weight: ["500", "600", "700"],
+  variable: "--font-inter",
+  weight: ["400", "500", "600"],
 });
 
-const manrope = Manrope({
+const interTight = Inter_Tight({
   subsets: ["latin"],
-  variable: "--font-manrope",
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter-tight",
+  weight: ["500", "600", "700", "800"],
 });
 
-const mono = IBM_Plex_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-mono-face",
+  variable: "--font-jb-mono",
   weight: ["500", "600"],
 });
 
@@ -35,16 +35,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${space.variable} ${manrope.variable} ${mono.variable}`}
+      className={`${inter.variable} ${interTight.variable} ${mono.variable}`}
     >
       <body
         style={
           {
+            ["--font-body" as string]: "var(--font-inter), Inter, system-ui, sans-serif",
             ["--font-display" as string]:
-              "var(--font-space), 'Space Grotesk', sans-serif",
-            ["--font-body" as string]: "var(--font-manrope), Manrope, sans-serif",
+              "var(--font-inter-tight), 'Inter Tight', sans-serif",
             ["--font-mono" as string]:
-              "var(--font-mono-face), 'IBM Plex Mono', monospace",
+              "var(--font-jb-mono), 'JetBrains Mono', ui-monospace, monospace",
+            fontFamily: "var(--font-inter), Inter, system-ui, sans-serif",
           } as React.CSSProperties
         }
       >

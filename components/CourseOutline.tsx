@@ -7,15 +7,15 @@ export function CourseOutline() {
   const [open, setOpen] = useState<string>(COURSE_OUTLINE[0]?.id ?? "");
 
   return (
-    <section className="section" id="outline">
-      <p className="eyebrow">Teachable Course Outline</p>
-      <h2>Full Lesson Breakdown</h2>
-      <p className="sub">
+    <section className="outline-section" id="outline">
+      <div className="section-eyebrow">Teachable Course Outline</div>
+      <h2 className="section-title">Full Lesson Breakdown</h2>
+      <p className="section-sub">
         Every section, lesson, and lab organized for Teachable — ready to import
         as your course structure.
       </p>
 
-      <div className="outline-list">
+      <div className="outline-grid">
         {COURSE_OUTLINE.map((phase) => {
           const isOpen = open === phase.id;
           return (
@@ -25,33 +25,33 @@ export function CourseOutline() {
             >
               <button
                 type="button"
-                className="outline-phase-head"
+                className="outline-phase-header"
                 aria-expanded={isOpen}
                 onClick={() => setOpen(isOpen ? "" : phase.id)}
               >
-                <span>
-                  <strong>{phase.title}</strong> {phase.subtitle}
+                <span className="outline-phase-num">{phase.title}</span>
+                <span className="outline-phase-title">{phase.subtitle}</span>
+                <span className="outline-phase-meta">
+                  <span className="outline-tag">{phase.meta}</span>
                 </span>
-                <span className="outline-meta">{phase.meta}</span>
+                <span className="outline-chevron" aria-hidden>
+                  ▾
+                </span>
               </button>
-              {isOpen && (
-                <div className="outline-phase-body">
-                  {phase.sections.map((section) => (
-                    <div key={section.title} className="outline-section">
-                      <h3>{section.title}</h3>
-                      <ul className="outline-lessons">
-                        {section.lessons.map((lesson) => (
-                          <li key={`${lesson.code}-${lesson.title}`}>
-                            <span className="outline-code">{lesson.code}</span>
-                            <span className="outline-kind">{lesson.kind}</span>
-                            <span>{lesson.title}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="outline-lessons">
+                {phase.sections.map((section) => (
+                  <div key={section.title} style={{ marginBottom: "1rem" }}>
+                    <div className="phase-module-label">{section.title}</div>
+                    {section.lessons.map((lesson) => (
+                      <div className="lesson-item" key={`${lesson.code}-${lesson.title}`}>
+                        <span className="outline-code">{lesson.code}</span>{" "}
+                        <span className="outline-kind">{lesson.kind}</span>{" "}
+                        {lesson.title}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           );
         })}

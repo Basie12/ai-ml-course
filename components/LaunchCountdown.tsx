@@ -14,7 +14,11 @@ function calc(): Parts {
   return { days, hours, mins, secs };
 }
 
-export function LaunchCountdown() {
+function fmt(parts: Parts) {
+  return `${parts.days}d ${parts.hours}h ${parts.mins}m ${parts.secs}s`;
+}
+
+export function LaunchCountdown({ inline = false }: { inline?: boolean }) {
   const [parts, setParts] = useState<Parts | null>(null);
 
   useEffect(() => {
@@ -24,6 +28,10 @@ export function LaunchCountdown() {
   }, []);
 
   const display = parts ?? { days: 0, hours: 0, mins: 0, secs: 0 };
+
+  if (inline) {
+    return <span>{parts ? fmt(display) : "Loading…"}</span>;
+  }
 
   return (
     <div className="countdown" aria-live="polite">

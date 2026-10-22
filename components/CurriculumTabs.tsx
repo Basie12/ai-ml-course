@@ -8,11 +8,11 @@ export function CurriculumTabs() {
   const phase = CURRICULUM_PHASES[active];
 
   return (
-    <section className="curriculum-section" id="curriculum">
+    <div className="curriculum-section" id="curriculum">
       <div className="curriculum-inner">
-        <p className="eyebrow">Curriculum</p>
-        <h2>8 Phases · 24 Weeks</h2>
-        <p className="sub">
+        <div className="section-eyebrow">Curriculum</div>
+        <h2 className="section-title">8 Phases · 24 Weeks</h2>
+        <p className="section-sub">
           Click a phase to see what&apos;s covered, why it matters, and the
           project you&apos;ll ship.
         </p>
@@ -32,11 +32,7 @@ export function CurriculumTabs() {
           ))}
         </div>
 
-        <div
-          className="phase-panel active"
-          role="tabpanel"
-          key={phase.tab}
-        >
+        <div className="phase-panel active" role="tabpanel" key={phase.tab}>
           <div className="phase-meta">
             <div className="phase-badge">{phase.badge}</div>
             <h3>{phase.title}</h3>
@@ -110,6 +106,6 @@ export function CurriculumTabs() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
