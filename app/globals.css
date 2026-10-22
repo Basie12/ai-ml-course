@@ -1867,8 +1867,8 @@ p { line-height: 1.75; }
 body { background: #FFFFFF; }
 
 /* Light token scope */
-.why-section, .who-section, #why-program, .curriculum-section, #outcomes,
-.layoff-section, .predictions-section, .salary-section, #how,
+.why-section, .who-section, .pipeline-section, #why-program, .curriculum-section,
+#outcomes, .layoff-section, .predictions-section, .salary-section, #how,
 .pricing-section, .outline-section, .bio-section {
   --bg: #FFFFFF;
   --bg2: #F6F8FB;
@@ -1890,7 +1890,7 @@ body { background: #FFFFFF; }
   background: var(--bg) !important;
 }
 /* Soft gray rows (alternate with white) */
-.who-section, .curriculum-section, .layoff-section, .salary-section,
+.who-section, #why-program, #outcomes, .predictions-section,
 .pricing-section, .bio-section {
   --bg: #F6F8FB;
   --bg2: #FFFFFF;
@@ -2120,31 +2120,16 @@ a:focus-visible, button:focus-visible, .btn-primary:focus-visible, .btn-ghost:fo
 .journey-step { border: 1px solid var(--border); border-radius: var(--radius); padding: 0.75rem 0.55rem; background: var(--bg2); text-align: center; }
 .journey-step strong { display: block; font-family: var(--font-display); font-size: 0.85rem; color: var(--fg); }
 .journey-step span { display: block; margin-top: 0.25rem; font-size: 0.75rem; color: var(--fg3); }
-.layoff-table { margin: 1.5rem 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--bg2); }
-.layoff-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); }
-.layoff-row:last-child { border-bottom: none; }
-.layoff-row.highlight { background: var(--accent-dim); font-weight: 700; }
 .prediction-list { display: grid; gap: 1rem; margin-top: 1.5rem; }
 .prediction { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.15rem 1.2rem; background: var(--bg2); }
 .prediction-n { margin: 0 0 0.35rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); font-weight: 700; }
 .prediction h3 { margin: 0 0 0.55rem; color: var(--fg); }
 .prediction p { margin: 0; color: var(--fg2); }
 .prediction-response { margin-top: 0.85rem !important; padding-top: 0.85rem; border-top: 1px solid var(--border); }
-.countdown { margin-top: 1.5rem; padding: 1.15rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg2); }
-.countdown-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 0.65rem; }
-.countdown-cell { text-align: center; padding: 0.75rem 0.4rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg3); }
-.countdown-cell strong { display: block; font-family: var(--font-display); font-size: 1.55rem; color: var(--fg); }
-.countdown-cell span, .countdown-caption { color: var(--fg3); font-size: 0.8rem; }
-.countdown-caption { margin: 0.75rem 0 0; text-align: center; }
-.refund-box, .roadmap { margin-top: 2rem; padding: 1.25rem 1.35rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg2); }
-.refund-box h3, .roadmap h3 { margin: 0 0 0.65rem; color: var(--fg); }
-.refund-box p { margin: 0; color: var(--fg2); }
-.refund-steps { margin: 1rem 0 0; padding-left: 1.15rem; color: var(--fg); display: grid; gap: 0.35rem; }
 .inline-title { margin: 2rem 0 0.75rem; font-family: var(--font-display); font-size: 1.2rem; color: var(--fg); }
 .blurb { color: var(--fg2); }
 .price-card .blurb { margin: 0.5rem 0 1rem; }
 .price s { color: var(--fg3); font-size: 0.85rem; }
-.launch-banner { margin-bottom: 1rem; color: var(--fg2); font-size: 0.95rem; }
 
 @media (max-width: 900px) {
   .auth-shell, .split-lists, .feature-list, .admin-grid, .journey-track, .countdown-grid, .pricing-grid { grid-template-columns: 1fr; }
@@ -2153,19 +2138,79 @@ a:focus-visible, button:focus-visible, .btn-primary:focus-visible, .btn-ghost:fo
 
 
 /* ==========================================================
-   FIXES FOR THE NEXT.JS COMPONENTS
-   (class names in app/page.tsx and components/* differ from
-   the original single-file HTML)
+   RESTORED ORIGINAL LAYOUT — pieces that were inline styles
+   in the single-file page, now classes used by app/page.tsx
    ========================================================== */
 
-/* Instructor section has no inner wrapper: pad and center it */
-.bio-section {
-  padding-block: clamp(60px, 8vw, 100px);
-  padding-inline: max(clamp(16px, 5vw, 80px), calc((100% - 1100px) / 2));
+/* Program journey: arrow + step pairs */
+.pipe-group { display: flex; align-items: center; }
+
+/* Career outcomes */
+.outcome-sub { margin-bottom: 40px; }
+.outcome-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.outcome-card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  --outcome-color: var(--accent);
+}
+.outcome-card.outcome-alt { --outcome-color: var(--amber); }
+.outcome-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.outcome-dot {
+  width: 12px; height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  background: var(--outcome-color);
+}
+.outcome-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--outcome-color);
+}
+.outcome-card p { color: var(--fg2); font-size: .93rem; line-height: 1.65; margin: 0; }
+
+/* Salary: the "fastest growing" card uses amber throughout */
+.salary-role-hot .salary-bar-fill { background: var(--amber); }
+.salary-role-hot .salary-target-band { color: var(--amber); }
+.salary-role-hot .salary-tag {
+  color: var(--amber);
+  border-color: rgba(180,83,9,0.3);
+  background: rgba(180,83,9,0.07);
 }
 
-/* Pricing: cards stand out from the gray section; CTA links fill the card */
-.pricing-section .price-card { background: #FFFFFF; }
+/* Urgency band */
+.urgency-cta-row { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
+.urgency-seats-bar-wrap .countdown-block { margin-top: 20px; }
+.countdown-caption { text-align: center; margin-top: 8px; font-size: .8rem; color: var(--fg2); }
+.ub-text strong { display: block; }
+
+/* Capstone project card */
+.project-card.project-capstone { border-color: var(--accent); background: var(--accent-dim); }
+.project-card.project-capstone .project-num { color: var(--accent); }
+
+/* How it works callout */
+.delivery-callout {
+  margin-top: 32px;
+  padding: 20px 24px;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* Pricing */
+.pricing-sub { margin-bottom: 36px; }
+.pricing-section .price-card,
 .pricing-section .price-card.featured { background: #FFFFFF; }
 .price-cta {
   display: flex;
@@ -2178,51 +2223,36 @@ a:focus-visible, button:focus-visible, .btn-primary:focus-visible, .btn-ghost:fo
 }
 .price-cta:hover { background: var(--bg2); border-color: var(--fg3); }
 
-/* Pricing roadmap: its .roadmap h3/p rules were leaking into the cards */
-.roadmap .feature h3 {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--fg3);
-  margin: 0 0 0.4rem;
+/* Refund policy box */
+.refund-box {
+  margin-top: 32px;
+  padding: 24px 28px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
 }
-.roadmap .feature p { margin: 0; font-size: 0.88rem; color: var(--fg2); }
-.roadmap .feature p strong {
+.pricing-section .refund-box { background: #FFFFFF; }
+.refund-icon { font-size: 1.5rem; line-height: 1; }
+.refund-body { flex: 1; min-width: 200px; }
+.refund-title {
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 800;
+  font-weight: 700;
+  font-size: 1rem;
   color: var(--fg);
+  margin-bottom: 6px;
 }
-.roadmap .feature-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.refund-body p { color: var(--fg2); font-size: .93rem; line-height: 1.7; margin: 0; }
+.refund-body strong { color: var(--fg); }
+.refund-body a { color: var(--link); }
+.refund-steps { list-style: none; display: flex; flex-direction: column; gap: 6px; min-width: 160px; }
+.refund-steps li { display: flex; align-items: center; gap: 8px; font-size: .875rem; color: var(--fg2); }
+.refund-steps li::before { content: '✓'; color: var(--accent); font-weight: 700; }
 
-/* Urgency band: benefit cards stack label over value */
-.urgency-benefit { flex-direction: column; gap: 2px; }
-.urgency-benefit strong { color: #FFFFFF; font-size: 0.9rem; }
-.urgency-benefit span { color: var(--fg2); font-size: 0.85rem; }
-.urgency-section .countdown-cell strong { color: var(--accent); }
-
-/* Lesson breakdown: code + type chips */
-.lesson-item { gap: 8px; }
-.outline-code {
-  font-size: 0.72rem;
-  color: var(--fg3);
-  font-variant-numeric: tabular-nums;
-  min-width: 28px;
-}
-.outline-kind {
-  font-size: 0.68rem;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 4px;
-  background: var(--accent-dim);
-  color: var(--accent);
-}
-
-/* Instructor contact links readable on the gray background */
-.bio-section a { color: var(--link); }
-
-@media (max-width: 900px) {
-  .roadmap .feature-list { grid-template-columns: 1fr; }
-}
+/* Footer */
+.site-footer { background: var(--navy-900); }
+.site-footer-contact { margin-top: 8px; font-size: .85rem; opacity: 0.75; }
+.site-footer-contact a { color: inherit; }

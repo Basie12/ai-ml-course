@@ -3,6 +3,13 @@
 import { useState } from "react";
 import { COURSE_OUTLINE } from "@/lib/course-outline";
 
+const KIND_CLASS: Record<string, string> = {
+  Video: "lt-video",
+  Lab: "lt-lab",
+  Live: "lt-live",
+  Quiz: "lt-quiz",
+};
+
 export function CourseOutline() {
   const [open, setOpen] = useState<string>(COURSE_OUTLINE[0]?.id ?? "");
 
@@ -32,7 +39,11 @@ export function CourseOutline() {
                 <span className="outline-phase-num">{phase.title}</span>
                 <span className="outline-phase-title">{phase.subtitle}</span>
                 <span className="outline-phase-meta">
-                  <span className="outline-tag">{phase.meta}</span>
+                  {phase.meta.split(" · ").map((tag) => (
+                    <span className="outline-tag" key={tag}>
+                      {tag}
+                    </span>
+                  ))}
                 </span>
                 <span className="outline-chevron" aria-hidden>
                   ▾
@@ -40,15 +51,24 @@ export function CourseOutline() {
               </button>
               <div className="outline-lessons">
                 {phase.sections.map((section) => (
-                  <div key={section.title} style={{ marginBottom: "1rem" }}>
-                    <div className="phase-module-label">{section.title}</div>
-                    {section.lessons.map((lesson) => (
-                      <div className="lesson-item" key={`${lesson.code}-${lesson.title}`}>
-                        <span className="outline-code">{lesson.code}</span>{" "}
-                        <span className="outline-kind">{lesson.kind}</span>{" "}
-                        {lesson.title}
-                      </div>
-                    ))}
+                  <div className="lesson-group" key={section.title}>
+                    <div className="lesson-group-title">{section.title}</div>
+                    <ul className="lesson-list">
+                      {section.lessons.map((lesson) => (
+                        <li
+                          className="lesson-item"
+                          key={`${lesson.code}-${lesson.title}`}
+                        >
+                          <span className="lesson-num">{lesson.code}</span>
+                          <span
+                            className={`lesson-type ${KIND_CLASS[lesson.kind] ?? "lt-video"}`}
+                          >
+                            {lesson.kind}
+                          </span>
+                          {lesson.title}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
