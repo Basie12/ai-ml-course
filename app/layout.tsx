@@ -22,9 +22,9 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BassaCourse · AI & ML Engineer Accelerator",
+  title: "AI with Bassa · 24-Week AI & ML Engineer Program",
   description:
-    "A 24-week practitioner program for software engineers ready for mid-to-senior AI/ML Engineering roles.",
+    "A 24-week, project-based AI & ML engineering program for working professionals in the US — production ML, MLOps, GenAI and agents, taught live by a working engineer.",
 };
 
 export default function RootLayout({

@@ -5,6 +5,17 @@ import { useEffect, useState } from "react";
 import { getSessionUser, logoutAccount, type SessionUser } from "@/lib/auth";
 import { appPath } from "@/lib/paths";
 
+/* Kept to the sections a buyer actually needs; fewer links also stops the
+   nav from overflowing on laptop-width screens. */
+const NAV_LINKS = [
+  { href: "/#curriculum", label: "Curriculum" },
+  { href: "/#outcomes", label: "Outcomes", wide: true },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/#about", label: "Instructor", wide: true },
+  { href: "/#faq", label: "FAQ" },
+];
+
 export function SiteHeader() {
   const [user, setUser] = useState<SessionUser | null>(null);
 
@@ -36,27 +47,11 @@ export function SiteHeader() {
         Bassa<span>.</span>AI
       </Link>
       <ul className="nav-links">
-        <li>
-          <a href={appPath("/#curriculum")}>Curriculum</a>
-        </li>
-        <li>
-          <a href={appPath("/#outcomes")}>Outcomes</a>
-        </li>
-        <li>
-          <a href={appPath("/#salary")}>Salary</a>
-        </li>
-        <li>
-          <a href={appPath("/#projects")}>Projects</a>
-        </li>
-        <li>
-          <a href={appPath("/#pricing")}>Pricing</a>
-        </li>
-        <li>
-          <a href={appPath("/#outline")}>Outline</a>
-        </li>
-        <li>
-          <a href={appPath("/#about")}>About</a>
-        </li>
+        {NAV_LINKS.map((link) => (
+          <li key={link.href} className={link.wide ? "nav-wide" : undefined}>
+            <a href={appPath(link.href)}>{link.label}</a>
+          </li>
+        ))}
         {user ? (
           <>
             <li>
