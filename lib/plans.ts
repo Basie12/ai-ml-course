@@ -5,7 +5,8 @@ export type PlanInfo = {
   id: PaidPlan;
   name: string;
   price: number;
-  retail: number;
+  /** Small label above the price on the pricing cards */
+  tierLabel: string;
   blurb: string;
   features: { label: string; included: boolean }[];
   cta: string;
@@ -24,18 +25,18 @@ export const PLANS: PlanInfo[] = [
     id: "SELF_PACED",
     name: "Self-Paced",
     price: 799,
-    retail: 999,
-    blurb:
-      "All recorded video content, 8 phases, 5 production projects, and code repos. Learn on your own schedule.",
+    tierLabel: "Self-Paced",
+    blurb: "All recorded video content, 8 phases, 5 production projects, and code repos. Learn on your own schedule.",
     cta: "Get Self-Paced Access",
     features: [
       { label: "All 8 phases of video content", included: true },
       { label: "5 project repos with starter code", included: true },
-      { label: "Community Discord access", included: true },
-      { label: "Resume + GitHub review template", included: true },
+      { label: "Private Telegram community", included: true },
+      { label: "3 mock interviews", included: true },
+      { label: "Resume, LinkedIn & GitHub profile creation and enhancement", included: true },
       { label: "2 live sessions per week", included: false },
-      { label: "Weekly office hours", included: false },
-      { label: "Project code reviews", included: false },
+      { label: "Weekly office hours", included: true },
+      { label: "Project code reviews", included: true },
       { label: "1:1 mentoring sessions", included: false },
     ],
   },
@@ -43,7 +44,7 @@ export const PLANS: PlanInfo[] = [
     id: "COHORT",
     name: "Founding Cohort",
     price: 1299,
-    retail: 1799,
+    tierLabel: "Cohort \u00b7 Live",
     blurb:
       "The full live experience — weekly engineering sessions, office hours, code reviews, and direct shaping of the curriculum.",
     cta: "Join Founding Cohort — $1,299",
@@ -51,8 +52,9 @@ export const PLANS: PlanInfo[] = [
     features: [
       { label: "All 8 phases of video content", included: true },
       { label: "5 project repos with starter code", included: true },
-      { label: "Community Discord access", included: true },
-      { label: "Resume + GitHub review", included: true },
+      { label: "Private Telegram community", included: true },
+      { label: "5 mock interviews", included: true },
+      { label: "Resume, LinkedIn & GitHub profile creation and enhancement", included: true },
       { label: "2 live sessions per week (recorded)", included: true },
       { label: "Weekly office hours", included: true },
       { label: "Project code reviews from Bassa", included: true },
@@ -63,7 +65,7 @@ export const PLANS: PlanInfo[] = [
     id: "MENTORSHIP",
     name: "Mentorship",
     price: 2499,
-    retail: 3499,
+    tierLabel: "Mentorship",
     blurb:
       "Everything in Cohort, plus 6 private 1:1 sessions, LinkedIn overhaul, interview prep, and direct job search strategy.",
     cta: "Apply for Mentorship",
@@ -74,7 +76,7 @@ export const PLANS: PlanInfo[] = [
       { label: "LinkedIn and resume overhaul", included: true },
       { label: "Interview prep and mock sessions", included: true },
       { label: "US job market positioning strategy", included: true },
-      { label: "Priority response via Discord", included: true },
+      { label: "Priority response in the Telegram community", included: true },
     ],
   },
 ];
@@ -89,7 +91,7 @@ export const TIER_RANK: Record<SubscriptionTier, number> = {
 /** Exact match: material must list the learner's tier in visibleToTiers. */
 export function canAccessMaterial(
   userTier: SubscriptionTier,
-  visibleToTiers: (SubscriptionTier | null | undefined)[] | null | undefined
+  visibleToTiers: (SubscriptionTier | null | undefined)[] | null | undefined,
 ): boolean {
   if (!visibleToTiers || visibleToTiers.length === 0) return false;
   if (userTier === "NONE") return false;
