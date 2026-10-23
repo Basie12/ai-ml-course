@@ -1,49 +1,39 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
-/* Phone-only enroll bar: appears once the hero scrolls away, hides while the
-   pricing section (which has its own buttons) is on screen. */
+/* Phone-only enroll bar: shows once the hero is off screen, hides over pricing. */
 export function MobileEnrollBar() {
   const [pastHero, setPastHero] = useState(false);
-  const [pricingVisible, setPricingVisible] = useState(false);
+  const [inPricing, setInPricing] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setPastHero(window.scrollY > 640);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
+    const hero = document.querySelector(".hero");
     const pricing = document.getElementById("pricing");
-    let observer: IntersectionObserver | undefined;
-    if (pricing && "IntersectionObserver" in window) {
-      observer = new IntersectionObserver(
-        ([entry]) => setPricingVisible(entry.isIntersecting),
-        { threshold: 0.1 },
-      );
-      observer.observe(pricing);
+    if (!hero || !("IntersectionObserver" in window)) return;
+    const heroObs = new IntersectionObserver(([e]) => setPastHero(!e.isIntersecting));
+    heroObs.observe(hero);
+    let pricingObs: IntersectionObserver | undefined;
+    if (pricing) {
+      pricingObs = new IntersectionObserver(([e]) => setInPricing(e.isIntersecting), { threshold: 0.05 });
+      pricingObs.observe(pricing);
     }
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      observer?.disconnect();
+      heroObs.disconnect();
+      pricingObs?.disconnect();
     };
   }, []);
 
-  const show = pastHero && !pricingVisible;
-
+  const show = pastHero && !inPricing;
   return (
-    <div className={`mobile-enroll-bar${show ? " show" : ""}`} aria-hidden={!show}>
-      <div className="mobile-enroll-text">
+    <div className={`m-bar${show ? " show" : ""}`} aria-hidden={!show}>
+      <div>
         <strong>Founding Cohort · $1,299</strong>
-        <span>Starts Nov 14 · 15 seats</span>
+        <span>Launches Nov 14 · 15 seats</span>
       </div>
-      <Link
-        href="/subscribe?plan=COHORT"
-        className="btn-primary mobile-enroll-btn"
-        tabIndex={show ? 0 : -1}
-      >
+      <a className="btn btn-primary" href="#pricing" tabIndex={show ? 0 : -1}>
         Enroll
-      </Link>
+      </a>
     </div>
   );
 }
