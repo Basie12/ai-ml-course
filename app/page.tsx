@@ -55,6 +55,10 @@ export default function HomePage() {
                     <path d="M5 12h14M13 6l6 6-6 6" />
                   </svg>
                 </a>{" "}
+                <Link className="btn btn-masterclass" href="/masterclasses">
+                  <span aria-hidden="true">{"🚀"}</span>
+                  {"Join Free AI/ML Masterclass"}
+                </Link>{" "}
                 <a className="btn btn-ghost-d" href="#projects">
                   {"See what you’ll build"}
                 </a>{" "}

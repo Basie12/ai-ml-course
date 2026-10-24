@@ -15,6 +15,7 @@ The marketing site, student dashboard and admin panel for **AI with Bassa**, a 2
 - [Getting started](#getting-started)
 - [Environment variables](#environment-variables)
 - [Admin access](#admin-access)
+- [Masterclasses](#masterclasses)
 - [Payments (Stripe)](#payments-stripe)
 - [Design system](#design-system)
 - [Contributing workflow](#contributing-workflow)
@@ -44,7 +45,7 @@ The marketing site, student dashboard and admin panel for **AI with Bassa**, a 2
 |-------|------------|
 | Frontend | Next.js 14 App Router, exported as static files |
 | Auth | Supabase Auth (email + password) |
-| Database | Postgres: `profiles`, `materials`, with Row Level Security |
+| Database | Postgres: `profiles`, `materials`, `masterclasses`, `masterclass_registrations`, with Row Level Security |
 | Payments | Stripe Checkout / Payment Links + `stripe-webhook` Edge Function |
 | Hosting | cPanel (static upload via deploy script) |
 
@@ -118,6 +119,16 @@ update public.profiles set is_admin = true where email = 'your@email.com';
 ### Email confirmation
 
 Supabase → Authentication → Providers → Email. Either keep **Confirm email** on and rely on the `confirm-email` Edge Function, or turn it off for a faster signup. Turning it off means anyone can register with an email they don't own.
+
+---
+
+## Masterclasses
+
+Free live masterclasses are fully database-driven. Create, publish, duplicate and archive them, view attendees and export CSV from **`/admin/masterclasses`**. No code changes are needed.
+
+- Public pages: `/masterclasses/` (list) and `/masterclasses/event/?slug=…` (details + registration)
+- One-time setup: run `supabase/migrations/20261024120000_masterclasses.sql`, then `supabase/seed/first_masterclass.sql`, in the Supabase SQL editor
+- Full guide (setup, admin how-to, security model): [`docs/MASTERCLASSES.md`](docs/MASTERCLASSES.md)
 
 ---
 

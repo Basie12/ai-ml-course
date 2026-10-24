@@ -8,7 +8,9 @@ import { appPath } from "@/lib/paths";
 
 function SignupInner() {
   const params = useSearchParams();
-  const next = params.get("next") || "/dashboard";
+  const rawNext = params.get("next") || "/dashboard";
+  // Only allow same-site paths (blocks "//evil.com" and "/\\evil.com" open redirects)
+  const next = /^\/(?![\/\\])/.test(rawNext) ? rawNext : "/dashboard";
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +23,7 @@ function SignupInner() {
     setError("");
     try {
       await registerAccount(email.trim(), password, phone.trim());
-      window.location.assign(appPath(next.startsWith("/") ? next : `/${next}`));
+      window.location.assign(appPath(next));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign up failed");
       setBusy(false);

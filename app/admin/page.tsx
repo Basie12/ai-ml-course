@@ -5,6 +5,7 @@ import { getSessionUser, type SessionUser } from "@/lib/auth";
 import { api, type Material } from "@/lib/api";
 import type { PaidPlan } from "@/lib/plans";
 import { appPath } from "@/lib/paths";
+import { AdminTabs } from "@/components/masterclass/AdminTabs";
 
 const TIERS: PaidPlan[] = ["SELF_PACED", "COHORT", "MENTORSHIP"];
 
@@ -119,6 +120,7 @@ export default function AdminPage() {
 
   return (
     <main className="admin">
+      <AdminTabs active="materials" />
       <h1>Admin · Course materials</h1>
       <p className="meta">
         Title, description, upload a video/file, and optionally a document link.

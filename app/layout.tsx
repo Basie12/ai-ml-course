@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Sora } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import "./globals.css";
+import "./masterclasses.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", weight: ["400", "500", "600", "700"] });
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", weight: ["600", "700", "800"] });

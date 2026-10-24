@@ -8,7 +8,9 @@ import { appPath } from "@/lib/paths";
 
 function LoginInner() {
   const params = useSearchParams();
-  const next = params.get("next") || "/dashboard";
+  const rawNext = params.get("next") || "/dashboard";
+  // Only allow same-site paths (blocks "//evil.com" and "/\\evil.com" open redirects)
+  const next = /^\/(?![\/\\])/.test(rawNext) ? rawNext : "/dashboard";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -21,7 +23,7 @@ function LoginInner() {
     try {
       await loginAccount(email.trim(), password);
       // Hard navigation avoids App Router soft-nav hang after auth
-      window.location.assign(appPath(next.startsWith("/") ? next : `/${next}`));
+      window.location.assign(appPath(next));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign in failed");
       setBusy(false);

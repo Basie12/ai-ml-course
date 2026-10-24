@@ -87,6 +87,13 @@ export function SiteHeader() {
                 </a>
               </li>
             ))}
+            <li className="nav-mc">
+              <Link className="btn-mc-nav" href="/masterclasses" onClick={close} aria-label="Join Free AI/ML Masterclass">
+                <span aria-hidden="true">{"🚀"}</span>
+                <span className="mc-long">Join Free AI/ML Masterclass</span>
+                <span className="mc-short" aria-hidden="true">Free Masterclass</span>
+              </Link>
+            </li>
             {user ? (
               <>
                 <li>

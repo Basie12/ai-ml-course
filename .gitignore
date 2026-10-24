@@ -47,7 +47,9 @@ amplifyconfiguration*
 # backend / infra / supabase — keep out of frontend client repo
 /backend/
 /infra/
-/supabase/
+/supabase/*
+!/supabase/migrations/
+!/supabase/seed/
 /app/api/
 /scripts/
 
